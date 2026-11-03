@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3f3eb">
+  <meta name="description" content="MOICARE — deck presentasi scene dan shot. 5 scene, 18 main shot, dan pilihan visual dari hasil generate sumber.">
+  <title>MOICARE — Visual Director’s Deck</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%23243f30'/%3E%3Ctext x='20' y='28' font-family='Georgia' font-size='29' text-anchor='middle' fill='%23f5f5ef'%3Em%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="storyboard.js" defer></script>
+  <script src="assets-map.js" defer></script>
+  <script src="deck.js" defer></script>
+</head>
+<body data-page-kind="cover" data-mode="presentation">
+  <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="5" height="5" rx=".6"/><rect x="15" y="4" width="5" height="5" rx=".6"/><rect x="4" y="15" width="5" height="5" rx=".6"/><rect x="15" y="15" width="5" height="5" rx=".6"/></symbol>
+    <symbol id="icon-focus" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><circle cx="12" cy="12" r="3.5"/></symbol>
+    <symbol id="icon-expand" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="icon-replay" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 .5 6M4 4v6h6"/></symbol>
+    <symbol id="icon-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M14 4v16m-7-9h3m-3 4h3"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+  </svg>
+  <a class="skip-link" href="#scene-title">Lewati navigasi</a>
+
+  <div class="ambient-stage" aria-hidden="true">
+    <img id="ambient-image" alt="" hidden draggable="false">
+    <div class="ambient-wash"></div>
+    <div class="ambient-light"></div>
+  </div>
+
+  <header class="topbar">
+    <button class="brand" id="home-button" aria-label="MOICARE — kembali ke sampul">moicare<span>®</span></button>
+    <div class="deck-identity"><b>VISUAL DIRECTOR’S DECK</b><span>SCALP TONIC ESSENCE</span></div>
+    <div class="mode-switch" role="group" aria-label="Mode presentasi">
+      <button id="presentation-button" class="mode-button active" aria-pressed="true">Presentasi</button>
+      <button id="review-button" class="mode-button" aria-pressed="false">Review</button>
+    </div>
+    <div class="top-actions">
+      <button id="index-button" class="tool-button" aria-label="Buka indeks scene dan shot" title="Indeks (I)"><svg><use href="#icon-grid"/></svg><span>Indeks</span></button>
+      <div class="focus-control">
+        <button id="focus-button" class="tool-button" aria-controls="focus-popover" aria-expanded="false" title="Atur depth of field latar"><svg><use href="#icon-focus"/></svg><span>Fokus latar</span></button>
+        <section id="focus-popover" class="focus-popover" aria-label="Pengaturan depth of field" hidden>
+          <div class="popover-heading"><b>Depth of field</b><label class="switch"><input id="depth-enabled" type="checkbox" checked aria-label="Aktifkan depth of field latar"><span></span></label></div>
+          <p>Latar pendukung dibuat lembut. Frame storyboard dan teks tetap tajam.</p>
+          <label class="range-heading" for="depth-range"><span>Intensitas latar</span><output id="depth-value">65%</output></label>
+          <input id="depth-range" type="range" min="0" max="100" value="65" aria-label="Intensitas depth of field latar">
+          <div class="range-ends"><span>Ringan</span><span>Dalam</span></div>
+        </section>
+      </div>
+      <button id="motion-button" class="tool-button" aria-pressed="true" title="Aktifkan atau hentikan motion"><span class="motion-icon" aria-hidden="true"><i></i><i></i><i></i></span><span id="motion-label">Motion</span></button>
+      <button id="fullscreen-button" class="tool-button fullscreen-button" aria-label="Layar penuh" title="Layar penuh (F)"><svg><use href="#icon-expand"/></svg></button>
+    </div>
+  </header>
+
+  <main class="deck-main" id="deck">
+    <header class="shot-heading">
+      <div class="heading-copy" id="scene-copy">
+        <div class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span><span id="scene-eyebrow">MOICARE · DIRECTOR’S TREATMENT</span><span id="cover-label" class="heading-note">5 SCENE / 18 SHOT</span><span id="closing-label" class="heading-note" hidden>DIRECTOR’S STATEMENT</span></div>
+        <h1 id="scene-title" tabindex="-1">The Essence of Refreshment</h1>
+      </div>
+      <div class="shot-heading-actions">
+        <nav id="shot-navigation" class="shot-navigation" aria-label="Shot di dalam scene aktif"></nav>
+        <button id="panel-toggle" class="panel-toggle" aria-label="Buka atau tutup informasi shot" aria-controls="shot-information" aria-expanded="true"><svg><use href="#icon-panel"/></svg><span>Informasi</span></button>
+      </div>
+    </header>
+
+    <section class="work-area" id="scene-screen" aria-labelledby="scene-title">
+      <div class="visual-column">
+        <div class="frame-topline"><span id="shot-id" class="shot-id">MOICARE / TREATMENT</span><div class="frame-tags"><span id="selected-variant-label">Visual utama</span><span class="aspect-label">16:9</span></div></div>
+        <div id="image-stage" class="image-stage">
+          <div class="frame-wrap">
+            <img id="main-image" class="main-image" alt="" hidden draggable="false" fetchpriority="high">
+            <div id="image-empty" class="image-empty"><span class="empty-cross cross-tl" aria-hidden="true"></span><span class="empty-cross cross-tr" aria-hidden="true"></span><span class="empty-cross cross-bl" aria-hidden="true"></span><span class="empty-cross cross-br" aria-hidden="true"></span><h2>Visual sumber belum tersedia</h2><p>Frame ini disediakan untuk gambar hasil generate yang dipilih pada shot terkait.</p></div>
+          </div>
+        </div>
+        <div class="frame-caption"><span id="source-caption">Sumber gambar mengikuti hasil generate dalam percakapan.</span><button id="replay-button" class="replay-button" title="Putar ulang gerak latar"><svg><use href="#icon-replay"/></svg><span>Ulangi gerak latar</span></button></div>
+        <section class="variants-section" aria-labelledby="variants-heading">
+          <div class="variants-heading"><h2 id="variants-heading">Pilihan visual <span id="visual-count">—</span></h2><span class="variants-hint">Ganti visual, tetap pada shot yang sama</span></div>
+          <div id="alternatives" class="alternatives" role="group" aria-label="Main Shot dan Alternative Shots"></div>
+        </section>
+      </div>
+
+      <aside id="shot-information" class="editorial-panel" aria-label="Informasi shot">
+        <div class="panel-identity"><span class="micro-label"><span id="shot-within-scene">—</span></span><span id="film-range" class="film-range">Timeline kerja · 28 detik</span></div>
+        <p id="scene-name" class="scene-name">The Essence of Refreshment</p>
+        <div class="production-line"><span id="production-badge" class="production-badge">Director’s Treatment</span></div>
+        <section class="summary-section"><h2 id="summary-label">Visual storytelling</h2><p id="scene-description">Perjalanan visual MOICARE dalam lima scene. Setiap shot dibaca sebagai bagian dari satu cerita.</p></section>
+        <div id="shot-info" class="shot-info">
+          <section class="info-section review-only"><h2>Tujuan visual</h2><p id="story-purpose"></p></section>
+          <section class="info-section review-only"><h2>Aksi dalam frame</h2><p id="shot-action"></p></section>
+          <section class="info-section"><h2>Camera movement</h2><p id="camera-movement"></p></section>
+          <section class="info-section"><h2>Transisi cerita</h2><p id="shot-transition"></p></section>
+          <section class="info-section review-only"><h2>Metode & alasan produksi</h2><p id="production-reason"></p></section>
+        </div>
+        <div class="timing-row"><span>Durasi shot</span><b id="duration-value">Belum dikunci</b></div>
+        <div class="asset-state"><span class="asset-dot" aria-hidden="true"></span><span id="asset-status">Pemetaan visual belum final</span></div>
+        <details class="source-details"><summary>Sumber & status kurasi<svg><use href="#icon-info"/></svg></summary><p id="source-detail">Pemilihan thumbnail untuk preview tidak menjadi persetujuan Director.</p></details>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="bottom-bar">
+    <div class="page-position"><span id="page-number">01</span><span class="page-divider" aria-hidden="true"></span><span id="page-total">20</span><span class="page-type">HALAMAN</span></div>
+    <nav id="chapter-navigation" class="chapter-navigation" aria-label="Navigasi antar-scene"></nav>
+    <div class="page-controls"><span class="keyboard-hint">← → pindah shot</span><button id="previous-button" class="nav-arrow previous" aria-label="Halaman sebelumnya" disabled><svg><use href="#icon-arrow"/></svg></button><button id="next-button" class="nav-arrow" aria-label="Halaman berikutnya"><svg><use href="#icon-arrow"/></svg></button></div>
+    <div id="deck-progress" class="deck-progress" role="progressbar" aria-label="Posisi halaman deck" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1"><span></span></div>
+  </footer>
+
+  <dialog id="index-dialog" class="index-dialog" aria-labelledby="index-title">
+    <div class="index-heading"><div><span class="micro-label">STORYBOARD INDEX</span><h2 id="index-title">Lima scene.<br><em>Delapan belas shot.</em></h2></div><button id="close-index-button" class="tool-button" aria-label="Tutup indeks"><svg><use href="#icon-close"/></svg></button></div>
+    <div id="index-list" class="index-list"></div>
+    <div class="index-footer"><button id="index-home-button" class="text-button">Sampul deck</button><span>Timeline iklan 28 detik · kendali presentasi manual</span><button id="index-closing-button" class="text-button">Director’s Statement ↗</button></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="scene-announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><div class="noscript-message">Aktifkan JavaScript untuk menavigasi scene, shot, dan pilihan visual. Seluruh aset tersedia di dalam folder deck.</div></noscript>
+</body>
+</html>
